@@ -2,9 +2,10 @@ import abc ###
 import telegram as tg
 import telegram.ext as tg_ext
 import typing as tp
+import abc
 
 
-class BaseHandler:
+class BaseHandler(abc.ABC):
     def __init__(self):
         self.user = tp.Optional[tg.User] = None
 
