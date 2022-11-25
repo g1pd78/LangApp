@@ -1,6 +1,6 @@
 import telegram as tg
 import telegram.ext as tg_ext
-
+import config
 
 class Base:
     def start(self) -> str:
@@ -11,11 +11,13 @@ class Base:
 
 class Worder(Base):
     def start(self) -> str:
-        return "asd"
+        return config.startMsg
+
     def help(self) -> str:
-        return "asdasdasdsa"
+        return config.helpMsg
 
-
+    def add(self) -> str:
+        pass
 
 
 def get_messages(user: tg.User) -> Base:

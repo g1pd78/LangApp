@@ -17,10 +17,10 @@ def main()->None:
 	application = tg_ext.Application.builder().token(args.key).build()
 
 
-	deck1 = cardClass.CardDeck()
-	deck1.addCard('school', 'English')
-	print(deck1.cardList[0].wordList[0])
-
+	#deck1 = cardClass.CardDeck()
+	#deck1.addCard('school', 'English')
+	#print(deck1.cardList[0].wordList[0])
+	handlers.setup_handlers(application)
 	application.run_polling()
 
 

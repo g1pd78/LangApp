@@ -2,18 +2,17 @@ import abc ###
 import telegram as tg
 import telegram.ext as tg_ext
 import typing as tp
-import abc
+from bot import messages
 
-
-class BaseHandler(abc.ABC):
+class BaseHandler():
     def __init__(self):
-        self.user = tp.Optional[tg.User] = None
+        self.user: tp.Optional[tg.User] = None
 
     async def __call__(self, update: tg.Update, 
         context: tg_ext.ContextTypes.DEFAULT_TYPE) -> None:
         self.user = update.effective_user
         self.messages = messages.get_messages(self.user)
-        await self.handler(update, context)
+        await self.handle(update, context)
 
     async def handle(self, update: tg.Update, 
         context: tg_ext.ContextTypes.DEFAULT_TYPE) -> None:
@@ -22,15 +21,24 @@ class BaseHandler(abc.ABC):
 class StartHandler(BaseHandler):
     async def handle(self, update: tg.Update, 
         context: tg_ext.ContextTypes.DEFAULT_TYPE) -> None:
-        await update.message.reply_text(self.message.start())
+        await update.message.reply_text(self.messages.start())
 
 
 class HelpHandler(BaseHandler):
     async def handle(self, update: tg.Update, 
         context: tg_ext.ContextTypes.DEFAULT_TYPE) -> None:
-        await update.message.reply_text(self.message.help())
+        await update.message.reply_text(self.messages.help())
+
+
+class AddHandler(BaseHandler):
+    async def handle(self, update: tg.Update, 
+        context: tg_ext.ContextTypes.DEFAULT_TYPE) -> None:
+        await update.message.reply_text(
+            self.messages.add(update.message.text)
+        )
 
 
 def setup_handlers(application: tg_ext.Application):
     application.add_handler(tg_ext.CommandHandler('start', StartHandler()))
     application.add_handler(tg_ext.CommandHandler('help', HelpHandler()))
+    application.add_handler(tg_ext.CommandHandler('add', addHandler()))
