@@ -14,13 +14,12 @@ def parse_args():
 def main()->None:
 	args = parse_args()
 	#lang.search(args.key)
+
+	deck = cardClass.CardDeck()
 	application = tg_ext.Application.builder().token(args.key).build()
-
-
-	#deck1 = cardClass.CardDeck()
 	#deck1.addCard('school', 'English')
 	#print(deck1.cardList[0].wordList[0])
-	handlers.setup_handlers(application)
+	handlers.setup_handlers(application, deck)
 	application.run_polling()
 
 
